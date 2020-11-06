@@ -39,7 +39,8 @@ module.exports = {
       filename: '[name].[contenthash].css'
     }),
     new AssetsPlugin({
-      filename: 'build/chunks.json',
+      path: path.resolve(__dirname, 'build'),
+      filename: 'chunks.json',
       removeFullPathAutoPrefix: true,
       entrypoints: true
     })

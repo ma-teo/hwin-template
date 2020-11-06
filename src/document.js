@@ -1,7 +1,7 @@
-import React from 'react'
-import chunks from '../build/chunks.json'
+import chunks from '../build/chunks'
+import App from './app'
 
-const Document = ({children}) => (
+const Document = () => (
   <html lang="pl">
     <head>
       <meta charSet="utf-8" />
@@ -10,7 +10,9 @@ const Document = ({children}) => (
       {chunks.main.css && <link rel="stylesheet" href={chunks.main.css} />}
     </head>
     <body>
-      <div id="app">{children}</div>
+      <div id="app">
+        <App />
+      </div>
       {chunks.main.js.map(js => <script key={js} src={js} />)}
     </body>
   </html>
