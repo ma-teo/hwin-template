@@ -25,7 +25,3 @@ Your app is ready to be deployed!
 Runs the compiled app in production.
 
 You can again view your application at `http://localhost:3000`
-
-### `npm run export`
-
-Exports a static version of the application in production mode.

@@ -6,7 +6,7 @@ const AssetsPlugin = require('assets-webpack-plugin')
 module.exports = {
   entry: './src/client.js',
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, '../build/public'),
     filename: '[name].[contenthash].js',
     hashDigestLength: 8
   },
@@ -39,7 +39,7 @@ module.exports = {
       filename: '[name].[contenthash].css'
     }),
     new AssetsPlugin({
-      path: path.resolve(__dirname, 'build'),
+      path: path.resolve(__dirname, '../build'),
       filename: 'chunks.json',
       removeFullPathAutoPrefix: true,
       entrypoints: true

@@ -19,12 +19,13 @@
     "node-sass": "^5.0.0",
     "sass-loader": "^10.0.5",
     "webpack": "^5.4.0",
-    "webpack-cli": "^4.2.0"
+    "webpack-cli": "^4.2.0",
+    "webpack-node-externals": "^2.5.2"
   },
   "scripts": {
-    "build": "webpack --mode production",
-    "dev": "webpack --mode development",
-    "serve": "node app.js"
+    "build": "webpack --mode production --config config/client.js && webpack --mode production --config config/server.js",
+    "dev": "webpack --mode development --config config/client.js && webpack --mode development --config config/server.js",
+    "serve": "node build/server.js"
   },
   "babel": {
     "presets": [
