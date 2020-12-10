@@ -16,15 +16,18 @@
     "css-loader": "^5.0.1",
     "mini-css-extract-plugin": "^1.2.1",
     "node-sass": "^5.0.0",
+    "nodemon": "^2.0.6",
     "sass-loader": "^10.0.5",
     "webpack": "^5.4.0",
     "webpack-cli": "^4.2.0",
     "webpack-node-externals": "^2.5.2"
   },
   "scripts": {
-    "build": "webpack --mode production --config config/client.js && webpack --mode production --config config/server.js",
-    "dev": "webpack --mode development --config config/client.js && webpack --mode development --config config/server.js",
-    "serve": "node build/server.js"
+    "build:client": "webpack --mode production --config config/client.js",
+    "build:server": "webpack --mode production --config config/server.js",
+    "dev:client": "webpack --mode development --config config/client.js --watch",
+    "dev:server": "webpack --mode development --config config/server.js --watch",
+    "serve": "nodemon build/server.js"
   },
   "babel": {
     "presets": [
