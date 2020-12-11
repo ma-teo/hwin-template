@@ -6,9 +6,8 @@ const AssetsPlugin = require('assets-webpack-plugin')
 module.exports = {
   entry: './src/client.js',
   output: {
-    path: path.resolve(__dirname, '../build/public'),
-    filename: '[name].[contenthash].js',
-    hashDigestLength: 8
+    path: path.resolve(__dirname, './build'),
+    filename: '[name].[contenthash:8].js'
   },
   module: {
     rules: [
@@ -27,19 +26,13 @@ module.exports = {
       }
     ]
   },
-  resolve: {
-    extensions: [
-      '.js',
-      '.jsx'
-    ]
-  },
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css'
+      filename: '[name].[contenthash:8].css'
     }),
     new AssetsPlugin({
-      path: path.resolve(__dirname, '../build'),
+      path: path.resolve(__dirname, './build'),
       filename: 'chunks.json',
       removeFullPathAutoPrefix: true,
       entrypoints: true
