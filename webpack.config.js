@@ -1,13 +1,38 @@
 const path = require('path')
+const fs = require('fs')
+const nodeExternals = require('webpack-node-externals')
+const WebpackBeforeBuildPlugin = require('before-build-webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyPlugin = require("copy-webpack-plugin")
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const AssetsPlugin = require('assets-webpack-plugin')
 
-module.exports = {
+class WaitPlugin extends WebpackBeforeBuildPlugin {
+  constructor(file, interval = 100, timeout = 10000) {
+    super(function(stats, callback) {
+      let start = Date.now()
+
+      function poll() {
+        if (fs.existsSync(file)) {
+          callback()
+        } else if (Date.now() - start > timeout) {
+          throw Error("Maybe it just wasn't meant to be.")
+        } else {
+          setTimeout(poll, interval)
+        }
+      }
+
+      poll()
+    })
+  }
+}
+
+const clientConfig = {
   entry: './src/client.js',
   output: {
-    path: path.resolve(__dirname, './build'),
-    filename: '[name].[contenthash:8].js'
+    path: path.resolve(__dirname, './build/public'),
+    filename: 'js/[name].[contenthash:8].js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -23,17 +48,29 @@ module.exports = {
           'css-loader',
           'sass-loader'
         ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|ico)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'media/[name].[contenthash:8].[ext]'
+        }
       }
     ]
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: 'public' }
+      ]
+    }),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash:8].css'
+      filename: 'css/[name].[contenthash:8].css'
     }),
     new AssetsPlugin({
       path: path.resolve(__dirname, './build'),
-      filename: 'chunks.json',
+      filename: 'assets.json',
       removeFullPathAutoPrefix: true,
       entrypoints: true
     })
@@ -51,3 +88,32 @@ module.exports = {
     }
   }
 }
+
+const serverConfig = {
+  entry: './src/server.js',
+  output: {
+    path: path.resolve(__dirname, './build'),
+    filename: 'server.js'
+  },
+  target: 'node',
+  externals: [
+    nodeExternals()
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        use: 'babel-loader',
+        exclude: /node_modules/
+      }
+    ]
+  },
+  plugins: [
+    new WaitPlugin('./build/assets.json')
+  ]
+}
+
+module.exports = [
+  clientConfig,
+  serverConfig
+]

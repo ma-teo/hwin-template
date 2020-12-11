@@ -1,4 +1,4 @@
-import chunks from '../build/chunks'
+import assets from '../build/assets'
 import App from './app'
 
 const Document = () => (
@@ -7,13 +7,13 @@ const Document = () => (
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>Hello World</title>
-      {chunks.main.css && <link rel="stylesheet" href={chunks.main.css} />}
+      {assets.main.css && <link rel="stylesheet" href={assets.main.css} />}
     </head>
     <body>
       <div id="app">
         <App />
       </div>
-      {chunks.main.js.map(js => <script key={js} src={js} />)}
+      {assets.main.js.map(js => <script key={js} src={js} />)}
     </body>
   </html>
 )
