@@ -9,11 +9,11 @@ const CopyPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const AssetsPlugin = require('assets-webpack-plugin')
 
+const start = Date.now()
+
 class WaitPlugin extends WebpackBeforeBuildPlugin {
   constructor(file, interval = 100, timeout = 10000) {
     super(function(stats, callback) {
-      let start = Date.now()
-
       function poll() {
         if (fs.existsSync(file) && fs.statSync(file).mtime > start) {
           callback()
