@@ -2,6 +2,8 @@ const path = require('path')
 const fs = require('fs')
 const nodeExternals = require('webpack-node-externals')
 const WebpackBeforeBuildPlugin = require('before-build-webpack')
+const NodemonPlugin = require('nodemon-webpack-plugin')
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyPlugin = require("copy-webpack-plugin")
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -109,7 +111,12 @@ const serverConfig = {
     ]
   },
   plugins: [
-    new WaitPlugin('./build/assets.json')
+    new WaitPlugin('./build/assets.json'),
+    new NodemonPlugin(),
+    new BrowserSyncPlugin({
+      proxy: 'localhost:5000',
+      ui: false
+    })
   ]
 }
 
