@@ -5,7 +5,7 @@ const WebpackBeforeBuildPlugin = require('before-build-webpack')
 const NodemonPlugin = require('nodemon-webpack-plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const CopyPlugin = require("copy-webpack-plugin")
+const CopyPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const AssetsPlugin = require('assets-webpack-plugin')
 
@@ -15,7 +15,7 @@ class WaitPlugin extends WebpackBeforeBuildPlugin {
       let start = Date.now()
 
       function poll() {
-        if (fs.existsSync(file)) {
+        if (fs.existsSync(file) && fs.statSync(file).mtime > start) {
           callback()
         } else if (Date.now() - start > timeout) {
           throw Error("Maybe it just wasn't meant to be.")
