@@ -11,10 +11,10 @@ const render = req => `<!doctype html>${renderToString(
 )}`
 
 express()
-  .use(express.static('build/client'))
+  .use(express.static(process.env.NODE_ENV === 'production' ? 'build/client' : 'public'))
   .get('*', (req, res) => {
     const html = render(req)
     html.includes('<h1>Error</h1>') ? res.status(404) : res.status(200)
     res.send(html)
   })
-  .listen(5000, () => console.log('Running at http://localhost:5000'))
+  .listen(3000, () => console.log('Running at http://localhost:3000'))

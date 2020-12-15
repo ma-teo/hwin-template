@@ -1,5 +1,4 @@
 const path = require('path')
-const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -8,14 +7,10 @@ const AssetsPlugin = require('assets-webpack-plugin')
 const development = env => {
   return {
     mode: env.NODE_ENV,
-    watch: env.NODE_ENV !== 'production',
     entry: './src/client.js',
     output: {
       path: path.resolve(__dirname, '../build/client'),
-      filename: 'js/[name].js',
-      hotUpdateChunkFilename: 'js/[id].[fullhash:8].js',
-      hotUpdateMainFilename: 'js/[runtime].[fullhash:8].json',
-      publicPath: '/'
+      filename: 'js/[name].js'
     },
     module: {
       rules: [
@@ -41,22 +36,21 @@ const development = env => {
         }
       ]
     },
-    plugins: [
-      new CleanWebpackPlugin(),
-      new CopyPlugin({
-        patterns: [
-          { from: 'public' }
-        ]
-      }),
-      new webpack.HotModuleReplacementPlugin()
-    ]
+    devServer: {
+      contentBase: path.join(__dirname, 'build/client'),
+      compress: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      hotOnly: true,
+      port: 5000
+    }
   }
 }
 
 const production = env => {
   return {
     mode: env.NODE_ENV,
-    watch: env.NODE_ENV !== 'production',
     entry: './src/client.js',
     output: {
       path: path.resolve(__dirname, '../build/client'),
