@@ -11,7 +11,7 @@ const render = req => `<!doctype html>${renderToString(
 )}`
 
 express()
-  .use(express.static('build/public'))
+  .use(express.static('build/client'))
   .get('*', (req, res) => {
     const html = render(req)
     html.includes('<h1>Error</h1>') ? res.status(404) : res.status(200)
