@@ -1,5 +1,5 @@
 import App from './app'
-const assets = process.env.NODE_ENV === 'production' ? require('../build/server/assets') : undefined
+import assets from '../build/assets'
 
 const Document = () => (
   <html lang="pl">
@@ -7,17 +7,13 @@ const Document = () => (
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>Hello World</title>
-      {process.env.NODE_ENV === 'production' && <link rel="stylesheet" href={assets.main.css} />}
+      {assets.main.css && <link rel="stylesheet" href={assets.main.css} />}
     </head>
     <body>
       <div id="app">
         <App />
       </div>
-      {
-        process.env.NODE_ENV === 'production'
-        ? assets.main.js.map(js => <script key={js} src={js} />)
-        : <script src="/main.js" />
-      }
+      {assets.main.js.map(js => <script key={js} src={js} />)}
     </body>
   </html>
 )

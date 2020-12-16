@@ -13,7 +13,6 @@
     "assets-webpack-plugin": "^6.1.2",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
-    "concurrently": "^5.3.0",
     "copy-webpack-plugin": "^7.0.0",
     "css-loader": "^5.0.1",
     "file-loader": "^6.2.0",
@@ -25,16 +24,15 @@
     "webpack": "^5.10.3",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0",
+    "webpack-hook-plugin": "^1.0.7",
     "webpack-node-externals": "^2.5.2"
   },
   "scripts": {
     "dev:client": "webpack serve --env NODE_ENV=development --config config/client.js",
     "dev:server": "webpack --env NODE_ENV=development --config config/server.js",
-    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "build:client": "webpack --env NODE_ENV=production --config config/client.js",
     "build:server": "webpack --env NODE_ENV=production --config config/server.js",
-    "build": "npm run build:client && npm run build:server",
-    "serve": "node build/server/main.js"
+    "serve": "node build/main.js"
   },
   "babel": {
     "presets": [

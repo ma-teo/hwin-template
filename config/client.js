@@ -1,4 +1,5 @@
 const path = require('path')
+const WebpackHookPlugin = require('webpack-hook-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -10,7 +11,7 @@ const development = env => {
     entry: './src/client.js',
     output: {
       path: path.resolve(__dirname, '../build/public'),
-      filename: '[name].js',
+      filename: 'js/[name].js',
       publicPath: '/'
     },
     module: {
@@ -36,6 +37,29 @@ const development = env => {
           }
         }
       ]
+    },
+    plugins: [
+      new WebpackHookPlugin({
+        onBuildEnd: ['npm run dev:server']
+      }),
+      new AssetsPlugin({
+        path: path.resolve(__dirname, '../build'),
+        filename: 'assets.json',
+        removeFullPathAutoPrefix: true,
+        entrypoints: true
+      })
+    ],
+    optimization: {
+      runtimeChunk: 'single',
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all'
+          }
+        }
+      }
     },
     devServer: {
       compress: true,
@@ -84,6 +108,9 @@ const production = env => {
       ]
     },
     plugins: [
+      new WebpackHookPlugin({
+        onBuildEnd: ['npm run build:server']
+      }),
       new CleanWebpackPlugin(),
       new CopyPlugin({
         patterns: [
@@ -94,7 +121,7 @@ const production = env => {
         filename: 'css/[name].[contenthash:8].css'
       }),
       new AssetsPlugin({
-        path: path.resolve(__dirname, '../build/server'),
+        path: path.resolve(__dirname, '../build'),
         filename: 'assets.json',
         removeFullPathAutoPrefix: true,
         entrypoints: true
