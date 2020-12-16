@@ -7,10 +7,14 @@ const development = env => {
   return {
     watch: true,
     mode: env.NODE_ENV,
-    entry: './src/server.js',
+    entry: {
+      server: './src/server.js'
+    },
     output: {
       path: path.resolve(__dirname, '../build'),
-      filename: '[name].js'
+      filename: '[name].js',
+      hotUpdateChunkFilename: '[id].[fullhash:8].js',
+      hotUpdateMainFilename: '[runtime].[fullhash:8].json',
     },
     target: 'node',
     externals: [
@@ -28,14 +32,17 @@ const development = env => {
     plugins: [
       new RunNodeWebpackPlugin(),
       new webpack.HotModuleReplacementPlugin()
-    ]
+    ],
+    devtool: 'source-map'
   }
 }
 
 const production = env => {
   return {
     mode: env.NODE_ENV,
-    entry: './src/server.js',
+    entry: {
+      server: './src/server.js'
+    },
     output: {
       path: path.resolve(__dirname, '../build'),
       filename: '[name].js'
@@ -52,7 +59,8 @@ const production = env => {
           exclude: /node_modules/
         }
       ]
-    }
+    },
+    devtool: 'source-map'
   }
 }
 

@@ -28,11 +28,11 @@
     "webpack-node-externals": "^2.5.2"
   },
   "scripts": {
-    "dev:client": "webpack serve --env NODE_ENV=development --config config/client.js",
+    "dev": "webpack serve --env NODE_ENV=development --config config/client.js",
     "dev:server": "webpack --env NODE_ENV=development --config config/server.js",
-    "build:client": "webpack --env NODE_ENV=production --config config/client.js",
+    "build": "webpack --env NODE_ENV=production --config config/client.js",
     "build:server": "webpack --env NODE_ENV=production --config config/server.js",
-    "serve": "node build/main.js"
+    "serve": "node build/server.js"
   },
   "babel": {
     "presets": [

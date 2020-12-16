@@ -12,7 +12,9 @@ const development = env => {
     output: {
       path: path.resolve(__dirname, '../build/public'),
       filename: 'js/[name].js',
-      publicPath: '/'
+      hotUpdateChunkFilename: 'js/[id].[fullhash:8].js',
+      hotUpdateMainFilename: 'js/[runtime].[fullhash:8].json',
+      publicPath: 'http://localhost:5000/'
     },
     module: {
       rules: [
@@ -63,12 +65,11 @@ const development = env => {
     },
     devServer: {
       compress: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
       hotOnly: true,
-      open: true,
-      port: 5000,
-      proxy: {
-        '/': 'http://localhost:3000'
-      }
+      port: 5000
     },
     devtool: 'source-map'
   }
@@ -138,7 +139,8 @@ const production = env => {
           }
         }
       }
-    }
+    },
+    devtool: 'source-map'
   }
 }
 
