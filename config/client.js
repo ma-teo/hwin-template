@@ -9,8 +9,9 @@ const development = env => {
     mode: env.NODE_ENV,
     entry: './src/client.js',
     output: {
-      path: path.resolve(__dirname, '../build/client'),
-      filename: 'js/[name].js'
+      path: path.resolve(__dirname, '../build/public'),
+      filename: '[name].js',
+      publicPath: '/'
     },
     module: {
       rules: [
@@ -37,13 +38,13 @@ const development = env => {
       ]
     },
     devServer: {
-      contentBase: path.join(__dirname, 'build/client'),
       compress: true,
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      },
       hotOnly: true,
-      port: 5000
+      open: true,
+      port: 5000,
+      proxy: {
+        '/': 'http://localhost:3000'
+      }
     }
   }
 }
@@ -53,7 +54,7 @@ const production = env => {
     mode: env.NODE_ENV,
     entry: './src/client.js',
     output: {
-      path: path.resolve(__dirname, '../build/client'),
+      path: path.resolve(__dirname, '../build/public'),
       filename: 'js/[name].[contenthash:8].js',
       publicPath: '/'
     },

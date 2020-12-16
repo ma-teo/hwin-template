@@ -16,7 +16,7 @@ const Document = () => (
       {
         process.env.NODE_ENV === 'production'
         ? assets.main.js.map(js => <script key={js} src={js} />)
-        : <script src="http://localhost:5000/js/main.js" />
+        : <script src="/main.js" />
       }
     </body>
   </html>

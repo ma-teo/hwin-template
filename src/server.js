@@ -11,7 +11,7 @@ const render = req => `<!doctype html>${renderToString(
 )}`
 
 express()
-  .use(express.static(process.env.NODE_ENV === 'production' ? 'build/client' : 'public'))
+  .use(express.static(process.env.NODE_ENV === 'production' ? 'build/public' : 'public'))
   .get('*', (req, res) => {
     const html = render(req)
     html.includes('<h1>Error</h1>') ? res.status(404) : res.status(200)
