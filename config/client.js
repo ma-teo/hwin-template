@@ -42,7 +42,7 @@ const development = env => {
     },
     plugins: [
       new WebpackHookPlugin({
-        onBuildEnd: ['npm run dev:server']
+        onBuildEnd: ['webpack --env NODE_ENV=development --config config/server.js']
       }),
       new AssetsPlugin({
         path: path.resolve(__dirname, '../build'),
@@ -110,7 +110,7 @@ const production = env => {
     },
     plugins: [
       new WebpackHookPlugin({
-        onBuildEnd: ['npm run build:server']
+        onBuildEnd: ['webpack --env NODE_ENV=production --config config/server.js']
       }),
       new CleanWebpackPlugin(),
       new CopyPlugin({
