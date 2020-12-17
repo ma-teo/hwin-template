@@ -31,7 +31,10 @@ const development = env => {
     },
     plugins: [
       new RunNodeWebpackPlugin(),
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.EnvironmentPlugin({
+        STATIC_PATH: 'public'
+      })
     ],
     devtool: 'source-map'
   }
@@ -60,6 +63,11 @@ const production = env => {
         }
       ]
     },
+    plugins: [
+      new webpack.EnvironmentPlugin({
+        STATIC_PATH: 'build/public'
+      })
+    ],
     devtool: 'source-map'
   }
 }
