@@ -8,10 +8,10 @@ const development = env => {
     watch: true,
     mode: env.NODE_ENV,
     entry: {
-      server: './src/server.js'
+      server: path.resolve(process.cwd(), 'src/server.js'),
     },
     output: {
-      path: path.resolve(__dirname, '../build'),
+      path: path.resolve(process.cwd(), 'build'),
       filename: '[name].js',
       hotUpdateChunkFilename: '[id].[fullhash:8].js',
       hotUpdateMainFilename: '[runtime].[fullhash:8].json',
@@ -44,10 +44,10 @@ const production = env => {
   return {
     mode: env.NODE_ENV,
     entry: {
-      server: './src/server.js'
+      server: path.resolve(process.cwd(), 'src/server.js'),
     },
     output: {
-      path: path.resolve(__dirname, '../build'),
+      path: path.resolve(process.cwd(), 'build'),
       filename: '[name].js'
     },
     target: 'node',

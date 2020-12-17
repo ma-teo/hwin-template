@@ -8,9 +8,9 @@ const AssetsPlugin = require('assets-webpack-plugin')
 const development = env => {
   return {
     mode: env.NODE_ENV,
-    entry: './src/client.js',
+    entry: path.resolve(process.cwd(), 'src/client.js'),
     output: {
-      path: path.resolve(__dirname, '../build/public'),
+      path: path.resolve(process.cwd(), 'build/public'),
       filename: 'js/[name].js',
       hotUpdateChunkFilename: 'js/[id].[fullhash:8].js',
       hotUpdateMainFilename: 'js/[runtime].[fullhash:8].json',
@@ -45,7 +45,7 @@ const development = env => {
         onBuildEnd: ['webpack --env NODE_ENV=development --config config/server.js']
       }),
       new AssetsPlugin({
-        path: path.resolve(__dirname, '../build'),
+        path: path.resolve(process.cwd(), 'build'),
         filename: 'assets.json',
         removeFullPathAutoPrefix: true,
         entrypoints: true
@@ -78,9 +78,9 @@ const development = env => {
 const production = env => {
   return {
     mode: env.NODE_ENV,
-    entry: './src/client.js',
+    entry: path.resolve(process.cwd(), 'src/client.js'),
     output: {
-      path: path.resolve(__dirname, '../build/public'),
+      path: path.resolve(process.cwd(), 'build/public'),
       filename: 'js/[name].[contenthash:8].js',
       publicPath: '/'
     },
@@ -122,7 +122,7 @@ const production = env => {
         filename: 'css/[name].[contenthash:8].css'
       }),
       new AssetsPlugin({
-        path: path.resolve(__dirname, '../build'),
+        path: path.resolve(process.cwd(), 'build'),
         filename: 'assets.json',
         removeFullPathAutoPrefix: true,
         entrypoints: true
