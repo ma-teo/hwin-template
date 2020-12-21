@@ -1,6 +1,6 @@
-# Simple React SSR Template
+# Simple Hwin Template
 
-Project written in [React](https://github.com/facebook/react)
+Project written in [React](https://github.com/facebook/react) using [Hwin](https://github.com/ma-teo/hwin)
 
 ## Available Scripts
 
