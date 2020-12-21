@@ -1,4 +1,6 @@
 {
+  "name": "hwin-template",
+  "version": "0.1.0",
   "dependencies": {
     "express": "^4.17.1",
     "history": "^5.0.0",
@@ -7,8 +9,8 @@
     "react-router-dom": "^6.0.0-beta.0"
   },
   "scripts": {
-    "start": "roar start",
-    "build": "roar build",
+    "start": "hwin start",
+    "build": "hwin build",
     "serve": "node build/server.js"
   }
 }
